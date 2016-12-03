@@ -1,0 +1,12 @@
+{
+    "extends": "standard",
+    "installedESLint": true,
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "plugins": [
+        "standard",
+        "promise"
+    ]
+}

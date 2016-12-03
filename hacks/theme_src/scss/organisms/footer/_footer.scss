@@ -1,0 +1,106 @@
+
+.footer-top {
+    
+    padding: 6em 0;
+    color: #fff;
+    background-image: url('/theme/dist/images/patterns/ball2.png');
+    background-repeat: repeat;
+
+    background-color: #c31d33;
+    
+}
+
+
+.footer-top a {
+    color: #fff;
+}
+
+.footer-bottom {
+    background-color: #000;
+    padding: 3em 0;
+    color: #fff;
+}
+
+
+.footer-bottom a {
+    color: #fff;
+    
+}
+
+.footer-bottom .social-icons a {
+    margin-right: 1em;
+    display: inline-block;
+}
+
+
+
+
+.title-widget {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 300;
+	line-height: 1;
+	position: relative;
+	text-transform: uppercase;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 25px;
+	margin-left: 0;
+	padding-left: 28px;
+}
+
+.title-widget::before {
+    background-color: #fff;
+    content: "";
+    height: 22px;
+    left: 0px;
+    position: absolute;
+    top: -2px;
+    width: 5px;
+}
+
+
+
+.widget_nav_menu ul {
+    list-style: outside none none;
+    padding-left: 0;
+}
+
+.widget_archive ul li {
+    background-color: rgba(0, 0, 0, 0.3);
+    content: "";
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: 7px;
+    width: 3px;
+}
+
+
+.widget_nav_menu ul li {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+	position: relative;
+    text-transform: uppercase;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 7px;
+    padding-bottom: 7px;
+	width:95%;
+}
+
+
+.widget_nav_menu ul li a {
+    color: #fff;
+}
+
+
+
+.title-median {
+    color: #fff;
+    font-size: 20px;
+    line-height: 20px;
+    margin: 0 0 15px;
+    text-transform: uppercase;
+	font-family: 'Fjalla One', sans-serif;
+}

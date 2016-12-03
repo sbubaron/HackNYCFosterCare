@@ -1,0 +1,44 @@
+.home .hero {
+    background-image: url('/theme/dist/images/likickheader.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 7em 0;
+    color: #fff;
+
+        font-weight: 400;
+    background-color: #000;
+    
+    box-sizing: border-box;
+    background-position: 50% 50%;
+    display: block;
+    font-size: 18px;
+    color: #fff;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    width: 100%;
+
+    h1 {
+        font-weight: 900;
+        font-size: 3em;    
+        text-transform: uppercase;
+    }
+
+    p {
+        font-size: 1.55em;
+        line-height: 1.25em;
+    }
+
+    .mailing-list {
+        margin: 1em 0;   
+        font-size: 0.8em;
+
+        a { 
+            color: #fff;
+            font-weight: 700;
+            border-bottom: 1px solid #fff;
+        }
+    }
+
+}
+

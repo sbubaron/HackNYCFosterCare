@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Star Quotes</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Bootstrap -->
+    <link href="/theme/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/theme/js/header/header.dev.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          NYC Hackathon
+          <h2>Profiles</h2>
+          <ul class="profiles">
+            <% for(var i=0; i<profiles.length; i++) {%>
+              <li class="profiles">
+                <span><a href="profiles/by-id/<%= profiles[i]._id %>">View Profile</a></span>
+                <span><%= profiles[i].name %></span>
+                <span><%= profiles[i].dob %></span>
+                <span><%= profiles[i].gender %></span>
+                 <span><%= profiles[i].interests %></span>
+                 <span><%= profiles[i].cellphone %></span>
+              </li>
+              <% } %>
+          </ul>
+
+          <h4>Add Profile</h4>
+          <form action="/profiles" method="POST">
+            <input type="text" placeholder="name" name="name">
+            <input type="date" placeholder="dob" name="dob">
+            <input type="text" placeholder="Cell Phone" name="cellphone">
+
+            <select name="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="unspecified">Unspecified</option>
+            </select>
+            <input type="text" placeholder="interests" name="interests" list="interests">
+            <datalist id="interests">
+              <option value="Housing">
+              <option value="Education">
+              <option value="Life Skills">
+              <option value="Employment">
+            </datalist>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,60 @@
+
+
+body{
+  background-color: $body-bg;
+
+
+}
+
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.position-relative {
+    position: relative;
+}
+
+body{
+  font-family: $font;
+  color: #222;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+
+}
+
+
+@each $i in $paddingList {
+    $name: nth($i, 1);
+    $value: nth($i, 2);
+    .#{$name} {
+        padding: $value 0;
+    }
+    .#{$name}-row {
+        .row {
+            padding: $value 0;
+        }
+    }
+}
+
+@import "overlay";

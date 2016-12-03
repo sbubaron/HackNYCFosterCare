@@ -1,0 +1,35 @@
+{
+    "wwwroot": "./",
+
+    "scss": {
+        "src": "./theme_src/scss/**/*.scss",
+        "files": "./theme_src/scss/style.scss",
+        "dest": "./public/theme/css"
+    },
+
+    "html": {
+        "src": ["**/*.html", "./views/**/*"]
+    },
+
+    "fonts": {
+        "src": "./theme_src/assets/fonts/**/*",
+        "dest": "./public/theme/assets/fonts"
+    },
+
+    "images": {
+        "src": "./theme_src/assets/images/**/*",
+        "dest": "./public/theme/images"
+    },
+
+    "jsheader":
+    {
+        "src": ["./theme_src/js/header/lib/**/*.js", "./theme_src/js/header/custom/**/*.js"],
+        "dest": "./public/theme/js/header"
+    },
+
+    "jsfooter":
+    {
+        "src": ["./theme_src/js/footer/lib/**/*.js", "./theme_src/js/footer/custom/**/*.js"],
+        "dest": "./public/theme/js/footer"
+    }
+}

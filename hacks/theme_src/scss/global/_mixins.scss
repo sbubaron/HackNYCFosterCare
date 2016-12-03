@@ -1,0 +1,52 @@
+@mixin section-light-theme
+{
+    .section-themeable
+    {
+        color: #fff;
+
+        a
+        {
+            color: $light-gray;
+        }
+        a:hover, a:focus
+        {
+            color: $gray;
+        }
+
+    }
+/*
+     .section-themeable.simple-btn
+    {
+        @extend .simple-btn__text-white;
+    }
+
+    .section-themeable.simple-btn:hover
+    {
+        @extend .simple-btn__text-white:hover;
+    }
+  */
+}
+
+
+@mixin section-dark-theme {
+    .section-themeable {
+        color: #000;
+        a {
+            color: $red;
+        }
+        a:hover {
+            color: $light-red;
+        }
+    }
+/*
+     .section-themeable.simple-btn
+    {
+        @extend .simple-btn__text-dark;
+    }
+
+    .section-themeable.simple-btn:hover
+    {
+        @extend .simple-btn__text-dark:hover;
+    }
+    */
+}

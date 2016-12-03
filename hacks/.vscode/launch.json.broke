@@ -1,0 +1,35 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch localhost with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://starquotes.box:3000",
+            "webRoot": "${workspaceRoot}/",
+            "sourceMaps": false
+        },
+        {
+            "name": "Launch index.html (without sourcemaps)",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceRoot}/index.html"
+        },
+        {
+            "name": "Attach with sourcemaps",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "sourceMaps": true,
+            "url": "http://starquotes.box:3000"
+        },
+        {
+            "name": "Attach to url with files served from ./out",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "url": "http://starquotes.box:3000",
+            "webRoot": "${workspaceRoot}/out"
+        }
+    ]
+}
