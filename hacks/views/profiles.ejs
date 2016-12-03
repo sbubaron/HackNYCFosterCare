@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MY APP</title>
+</head>
+<body>
+  <h2>Profiles interested in <%= name %></h2>
+
+  <ul class="profiles">
+  <% for(var i=0; i<profiles.length; i++) {%>
+    <li class="profiles">
+       <span><a href="profiles/by-id/<%= profiles[i]._id %>">View Profile</a></span>
+        <span><%= profiles[i].name %></span>
+        <span><%= profiles[i].dob %></span>
+        <span><%= profiles[i].gender %></span>
+          <span><%= profiles[i].interests %></span>
+          <span><%= profiles[i].cellphone %></span>
+
+    </li>
+  <% } %>
+  </ul>
+
+
+</body>
+</html>
