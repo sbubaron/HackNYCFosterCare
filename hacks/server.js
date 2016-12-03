@@ -6,11 +6,9 @@ const ObjectID = require('mongodb').ObjectID
 
 
 
-
-
 var db
 
-MongoClient.connect('mongodb://localhost:27017/exampleDb', function (err, database) {
+MongoClient.connect('mongodb://mongouser:password@ds119788.mlab.com:19788/hacknycfostercare', function (err, database) {
   if (err) {
     return console.log(err)
   }
@@ -51,12 +49,13 @@ app.post('/profiles', (req, res) => {
   })
 })
 
-app.get('/profiles/by-interests/:interests', (req, res) => {
-  console.log(req.params.name)
+app.get('/profiles/by-interests/:interest', (req, res) => {
+  console.log(req.params.interest)
 
-  db.collection('quotes').find({name: req.params.name}).toArray((err, result) => {
+  db.collection('profiles').find({interests: req.params.interest}).toArray((err, result) => {
     if (err) return console.log(err)
-    res.render('profiles.ejs', {name: req.params.name, quotes: result})
+    console.log(result)
+    res.render('profiles.ejs', {interest: req.params.interest, profiles: result})
   })
 })
 
