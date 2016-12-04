@@ -12,7 +12,6 @@
           <th></th>
           <th>Task ID</th>          
           <th>Name</th>
-          <th>Interests</th>
           <th>Trigger</th>
           </tr>
           </thead>
@@ -20,10 +19,9 @@
 
             <% for(var i=0; i<tasks.length; i++) {%>
             <tr>
-              <td><span><a href="tasks/by-id/<%= tasks[i]._id %>"><i class="fa fa-edit"></i></a></span></td>
+              <td><span><a href="tasks/by-id/<%= tasks[i]._id %>"><i class="fa fa-edit"></i></a><a role="button" class="deleteTask" data-button='{"id": "<%= tasks[i]._id %>"}'> <i class="fa fa-trash"></i></a></span></td>
                 <td><span><%= tasks[i]._id %></span>
-                <td><span><%= tasks[i].name %></span>
-                <td><span><%= tasks[i].interests %></span>
+                <td><span><%= tasks[i].name %></span>              
                 <td><span><%= tasks[i].trigger %></span>
                 
               </tr>
@@ -31,7 +29,7 @@
               </tbody>
           </table>
 
-          <h4>Add Profile</h4>
+          <h4>Add Task</h4>
           <div class="addTask">
           <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4">
@@ -42,31 +40,9 @@
             <input type="text" placeholder="Name" class="form-control" name="name">
           </div>
 
-
-           <div class="form-group">
-            <label for="name">Message</label>
-            <textarea rows="4" cols="50" class="form-control" placeholder="Message" name="message"></textarea>
-          </div>
-
-           <div class="form-group">
-            <label for="gender">Interests</label>
-            <input type="text" placeholder="Interests" name="interests" list="interests" class="form-control">
-            <datalist id="interests">
-              <option value="Housing">
-              <option value="Education">
-              <option value="Life Skills">
-              <option value="Employment">
-            </datalist>
-          </div>
-
-           <div class="form-group">
-            <label for="name">More Info URL</label>
-            <input type="text" placeholder="More Info URL" class="form-control" name="url">
-          </div>
-
           <div class="form-group">
-            <label for="name">Parent Task</label>
-            <input type="text" placeholder="Parent Task" class="form-control" name="parentTaskId">
+            <label for="name">Trigger</label>
+            <input type="text" placeholder="Trigger" class="form-control" name="trigger">
           </div>
 
           <button type="submit" class="btn btn-default">Submit</button>

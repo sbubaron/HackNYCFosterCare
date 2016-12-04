@@ -150,6 +150,19 @@ app.get('/tasks', function (req, res) {
   })
 })
 
+
+app.get('/tasks/json', function (req, res) {
+  // var cursor = db.collection('quotes').find()
+  db.collection('tasks').find().toArray(function (err, results) {
+    if (err) {
+      console.log(err)
+    }
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify({tasks: results}, null, 3))
+  })
+})
+
+
 app.post('/tasks', (req, res) => {
   console.log(req.body)
   // Train yourself to let go of everything you fear to lose
@@ -162,22 +175,87 @@ app.post('/tasks', (req, res) => {
   })
 })
 
+app.delete('/tasks/delete/by-id/', (req, res) => {
+  console.log('request to delete task ' + req.body.id)
+
+  db.collection('tasks').findOneAndDelete({_id: ObjectID(req.body.id)},
+  (err, result) => {
+    if (err) return res.send(500, err)
+    res.json({deleted: true})
+  })
+})
 
 app.get('/tasks/by-id/:id', (req, res) => {
-  console.log(req.params.id)
-  
+  // console.log(req.params.id)
 
   db.collection('tasks').find({_id: ObjectID(req.params.id)}).toArray((err, taskRes) => {
     if (err) return console.log(err)
-    console.log(taskRes)
-    res.render('task.ejs', {task: taskRes, items: []})
-  })
-/*
-  db.collection('taskitems').find({taskId: ObjectID(req.params.id)}).toArray((err, taskitems) => {
-    if (err) return console.log(err2)
+    //console.log(taskRes)
 
-    items = taskitems
-  })*/
-  //console.log(task)
-  
+    db.collection('taskItems').find({parentTaskId: req.params.id}).toArray((err, taskItemsRes) => {
+      if (err) return console.log(err)
+      // console.log(taskItemsRes)
+
+      res.render('task.ejs', {task: taskRes, items: taskItemsRes})
+    })
+  })
+})
+
+app.post('/tasks/by-id/:id/items', (req, res) => {
+  console.log('attempting insert/update of taskitem')
+  console.log(req.body)
+  console.log(req.body._id)
+
+  var id
+  if(req.body._id) {
+    id = ObjectID(req.body._id)
+  }
+
+  // Train yourself to let go of everything you fear to lose
+
+/*  db.collection('taskItems').save(req.body, (err, result) => {
+    if (err) return console.log(err)
+    console.log(result)
+    console.log('saved task item to database')
+    console.log(req.body)
+    res.redirect('/tasks/by-id/' + req.params.id)
+  }) */
+
+
+  db.collection('taskItems')
+  .findOneAndUpdate({_id: ObjectID(id)}, {
+    $set: {
+      name: req.body.name,
+      index: req.body.index,
+      message: req.body.message,
+      type: req.body.type,
+      expectedInput: req.body.expectedInput,
+      parentTaskId: req.body.parentTaskId
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.redirect('/tasks/by-id/' + req.body.parentTaskId )
+  })
+})
+
+
+app.delete('/taskitems/delete/by-id/', (req, res) => {
+  console.log('request to delete task item ' + req.body.id)
+
+  db.collection('taskItems').findOneAndDelete({_id: ObjectID(req.body.id)},
+  (err, result) => {
+    if (err) return res.send(500, err)
+    res.json({deleted: true})
+  })
+})
+
+app.get('/taskitems/by-id/:id/json', (req, res) => {
+  db.collection('taskItems').find({_id: ObjectID(req.params.id)}).toArray((err, result) => {
+    if (err) return console.log(err)
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify({taskItem: result}, null, 3))
+  })
 })

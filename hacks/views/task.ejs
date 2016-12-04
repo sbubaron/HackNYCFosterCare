@@ -6,72 +6,88 @@
 
 
           <h2>Task</h2>
-          ID: <%= task._id %><br />
-          <%= task.name %><br />
-          <%= task.trigger %><br />
+          ID: <%= task[0]._id %><br />
+          Name: <%= task[0].name %><br />
+          Trigger: <%= task[0].trigger %><br />
 
           <h3>Task Items</h3>
           <table id="tasksitems" class="table table-bordered">
           <thead>
           <tr>
           <th></th>
-          <th>Task Item ID</th>          
+          <!--<th>Task Item ID</th>-->
+          <th>Index</th>          
           <th>Name</th>
           <th>Message</th>
-          <th>Parent ID</th>
+          <th>Type</th>
+          <th>Expected Input</th>
           </tr>
           </thead>
           <tbody>
 
             <% for(var i=0; i<items.length; i++) {%>
             <tr>
-              <td><span><a href="tasks/by-id/<%= tasks[i]._id %>"><i class="fa fa-edit"></i></a></span></td>
-                <td><span><%= items[i]._id %></span>
+              <td><span><a role="button" class="viewTaskItem" data-button='{"id": "<%= items[i]._id %>"}'><i class="fa fa-edit"></i></a></span> <a role="button" class="deleteTaskItem" data-button='{"id": "<%= items[i]._id %>"}'> <i class="fa fa-trash"></i></a></td>
+                <!--<td><span><%= items[i]._id %></span>-->
+                <td><span><%= items[i].index %></span>
                 <td><span><%= items[i].name %></span>
-                <td><span><%= items[i].interests %></span>
-                <td><span><%= items[i].trigger %></span>
+                <td><span><%= items[i].message %></span>
+                <td><span><%= items[i].type %></span>
+                <td><span><%= items[i].expectedInput %></span>
+                
+
                 
               </tr>
               <% } %>
               </tbody>
           </table>
 
-          <h4>Add Profile</h4>
+          <h4>Add Item</h4>
           <div class="addTask">
           <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4">
 
-           <form action="/tasks" method="POST">
+           <form action="/tasks/by-id/<%= task[0]._id %>/items" method="POST">
            <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" placeholder="Name" class="form-control" name="name">
+            <input type="text" placeholder="Name" class="form-control" id="name" name="name">
+          </div>
+
+          <div class="form-group">
+            <label for="name">Index</label>
+            <input type="text" placeholder="Index" class="form-control" id="index" name="index">
           </div>
 
 
            <div class="form-group">
             <label for="name">Message</label>
-            <textarea rows="4" cols="50" class="form-control" placeholder="Message" name="message"></textarea>
+            <textarea rows="4" cols="50" class="form-control" placeholder="Message" id="message" name="message"></textarea>
           </div>
 
-           <div class="form-group">
-            <label for="gender">Interests</label>
-            <input type="text" placeholder="Interests" name="interests" list="interests" class="form-control">
-            <datalist id="interests">
-              <option value="Housing">
-              <option value="Education">
-              <option value="Life Skills">
-              <option value="Employment">
-            </datalist>
+          
+
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select name="type" id="type" class="form-control">
+            <option>Info</option>
+            <option>Free Prompt</option>
+            <option>Fixed Prompt</option>
+            </select>
           </div>
 
-           <div class="form-group">
-            <label for="name">More Info URL</label>
-            <input type="text" placeholder="More Info URL" class="form-control" name="url">
+          <div class="form-group">
+            <label for="name">Expected Input (| separated)</label>
+            <input type="text" placeholder="Expected Input" class="form-control" id="expectedInput" name="expectedInput">
           </div>
 
           <div class="form-group">
             <label for="name">Parent Task</label>
-            <input type="text" placeholder="Parent Task" class="form-control" name="parentTaskId">
+            <input type="text" placeholder="Parent Task" class="form-control" name="parentTaskId" value="<%= task[0]._id %>">
+          </div>
+
+          <div class="form-group">
+            <label for="name">ID</label>
+            <input type="text" class="form-control" name="_id" id="_id" value="">
           </div>
 
           <button type="submit" class="btn btn-default">Submit</button>
