@@ -5,26 +5,31 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
 
 
-          <h2>Tasks</h2>
-          <table id="tasks" class="table table-bordered">
+          <h2>Task</h2>
+          ID: <%= task._id %><br />
+          <%= task.name %><br />
+          <%= task.trigger %><br />
+
+          <h3>Task Items</h3>
+          <table id="tasksitems" class="table table-bordered">
           <thead>
           <tr>
           <th></th>
-          <th>Task ID</th>          
+          <th>Task Item ID</th>          
           <th>Name</th>
-          <th>Interests</th>
-          <th>Trigger</th>
+          <th>Message</th>
+          <th>Parent ID</th>
           </tr>
           </thead>
           <tbody>
 
-            <% for(var i=0; i<tasks.length; i++) {%>
+            <% for(var i=0; i<items.length; i++) {%>
             <tr>
               <td><span><a href="tasks/by-id/<%= tasks[i]._id %>"><i class="fa fa-edit"></i></a></span></td>
-                <td><span><%= tasks[i]._id %></span>
-                <td><span><%= tasks[i].name %></span>
-                <td><span><%= tasks[i].interests %></span>
-                <td><span><%= tasks[i].trigger %></span>
+                <td><span><%= items[i]._id %></span>
+                <td><span><%= items[i].name %></span>
+                <td><span><%= items[i].interests %></span>
+                <td><span><%= items[i].trigger %></span>
                 
               </tr>
               <% } %>

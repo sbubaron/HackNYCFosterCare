@@ -30,8 +30,7 @@ app.get('/', function (req, res) {
   db.collection('profiles').find().toArray(function (err, results) {
     if (err) {
       console.log(err)
-    }
-    
+    }    
     res.render('index.ejs', {profiles: results})
   // send HTML file populated with quotes here
   })
@@ -163,3 +162,22 @@ app.post('/tasks', (req, res) => {
   })
 })
 
+
+app.get('/tasks/by-id/:id', (req, res) => {
+  console.log(req.params.id)
+  
+
+  db.collection('tasks').find({_id: ObjectID(req.params.id)}).toArray((err, taskRes) => {
+    if (err) return console.log(err)
+    console.log(taskRes)
+    res.render('task.ejs', {task: taskRes, items: []})
+  })
+/*
+  db.collection('taskitems').find({taskId: ObjectID(req.params.id)}).toArray((err, taskitems) => {
+    if (err) return console.log(err2)
+
+    items = taskitems
+  })*/
+  //console.log(task)
+  
+})
