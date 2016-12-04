@@ -21,6 +21,7 @@
           <th>Message</th>
           <th>Type</th>
           <th>Expected Input</th>
+          <th>Parent Task Id</th>
           </tr>
           </thead>
           <tbody>
@@ -34,6 +35,7 @@
                 <td><span><%= items[i].message %></span>
                 <td><span><%= items[i].type %></span>
                 <td><span><%= items[i].expectedInput %></span>
+                <td><span><%= items[i].parentTaskId %></span>
                 
 
                 
@@ -72,6 +74,7 @@
             <option>Info</option>
             <option>Free Prompt</option>
             <option>Fixed Prompt</option>
+            <option>Complete</option>
             </select>
           </div>
 

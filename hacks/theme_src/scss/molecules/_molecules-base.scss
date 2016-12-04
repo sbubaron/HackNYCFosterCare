@@ -3,3 +3,27 @@
 .mailinglist .interests label {
     margin-right: 1em;
 }
+
+
+.chatbubble {
+    padding: 10px;
+    background-color: #eee;
+    border: 1px solid #000;
+
+    margin-bottom: 1em;
+    border-radius: 20px;
+    max-width: 70%;
+}
+
+.chatbubble.bot {
+//    float: right;
+    border: 1px solid #000;
+    background-color: #fff;
+}
+
+
+#chatlog {
+  //  clear: both;
+  //  float: left;
+
+}

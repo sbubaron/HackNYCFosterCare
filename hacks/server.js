@@ -125,6 +125,45 @@ app.put('/profiles/update/by-id/', (req, res) => {
   })
 })
 
+app.put('/profiles/update/by-phone/', (req, res) => {
+  console.log('updating profile by phone' + req.body.cellphone)
+
+  var prof = Object()
+
+  if (req.body.dob) {
+    prof.dob = req.body.dob
+  }
+
+  if (req.body.name) {
+    prof.name = req.body.name
+  }
+
+  if (req.body.cellphone) {
+    prof.cellphone = req.body.cellphone
+  }
+
+  if (req.body.interests) {
+    prof.interests = req.body.interests
+  }
+
+  if (req.body.activeTaskID) {
+    prof.activeTaskID = req.body.activeTaskID
+  }
+  else if (req.body.activeTaskID === null) {
+    prof.activeTaskID = ''
+  }
+
+  db.collection('profiles')
+  .findOneAndUpdate({cellphone: req.body.cellphone}, {
+    $set: prof
+  }, {
+    sort: {_id: -1},
+    upsert: false
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
 
 
 app.get('/profiles/by-id/:id/json', (req, res) => {
@@ -134,6 +173,17 @@ app.get('/profiles/by-id/:id/json', (req, res) => {
     if (err) return console.log(err)
     res.setHeader('Content-Type', 'application/json')
     res.send(JSON.stringify({id: req.params.id, profile: result}, null, 3))
+  })
+})
+
+
+app.get('/taskitem/by-id/:id/json', (req, res) => {
+  console.log(req.params.id)
+
+  db.collection('taskItems').find({_id: ObjectID(req.params.id)}).toArray((err, result) => {
+    if (err) return console.log(err)
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify({taskItem: result}, null, 3))
   })
 })
 
@@ -161,6 +211,96 @@ app.get('/tasks/json', function (req, res) {
     res.send(JSON.stringify({tasks: results}, null, 3))
   })
 })
+
+
+app.get('/tasks/by-trigger/:trigger/taskitem/json', function (req, res) {
+  // var cursor = db.collection('quotes').find()
+  console.log(req.params.trigger)
+
+  db.collection('tasks').findOne({trigger: req.params.trigger},
+  (err, results) => {
+    if (err) {
+      console.log(err)
+    }
+    console.log(results)
+    var idStr = results._id + ''
+
+    db.collection('taskItems').find({parentTaskId: idStr}).sort({index: 1}).limit(1).toArray(
+    (err2, taskItem) => {
+      if (err2) {
+        console.log(err2)
+      }
+              res.setHeader('Content-Type', 'application/json')
+              res.send(JSON.stringify({task: results, taskItem: taskItem}, null, 3))
+    })
+  })
+})
+
+app.post('/profiles/performTask', (req, res) => {
+    console.log(req.body)
+
+    db.collection('profiles').findOne({cellphone: req.body.cellphone},
+    (err, profile) => {
+      if(err) console.log(err)
+
+      var profTask = new Object();
+      profTask.profileId = profile._id
+      profTask.taskId = profile.activeTaskID
+      profTask.userResponse = req.body.taskResponse
+
+      db.collection('profileTasks').save(profTask, (err, result) => {
+      
+        if (err) return console.log(err)
+      
+        console.log('saved profile task to database')
+        console.log(profTask)
+
+
+         db.collection('taskItems').findOne({_id: ObjectID(profTask.taskId)},
+          (err2, curTaskItem) => {
+            if (err2) {
+              console.log(err2)
+            }
+
+            console.log(curTaskItem)
+            console.log(curTaskItem.parentTaskId)
+            console.log(curTaskItem.index)
+
+              db.collection('taskItems').find({parentTaskId: curTaskItem.parentTaskId, index: {$gt: curTaskItem.index}}).sort({index: 1}).limit(1).toArray(
+                (err3, nextTaskItem) => {
+                  if (err2) {
+                    console.log(err2)
+                  }
+
+                  console.log(nextTaskItem)
+                  console.log(nextTaskItem[0]._id)
+
+                  db.collection('profiles')
+                    .findOneAndUpdate({cellphone: req.body.cellphone}, {
+                      $set: {activeTaskID: nextTaskItem[0]._id}
+                    }, {
+                      sort: {_id: -1},
+                      upsert: false
+                    }, (err, result) => {
+                      if (err) return res.send(err)
+                          res.setHeader('Content-Type', 'application/json')
+                          res.send(JSON.stringify({taskItem: nextTaskItem}, null, 3))
+                    })
+                     
+                }) //close nextTaskItem Query
+
+
+          }) //close curTaskItem Query
+        
+
+      }) //close profileTasks Save
+      
+      
+    }) //close first profile query
+
+  
+}) //close route
+
 
 
 app.post('/tasks', (req, res) => {
