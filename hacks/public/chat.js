@@ -13,7 +13,7 @@ function submitSMS() {
     if(msg === undefined)
         msg = '';
     if(msg != '')
-        $('#chatlog').append("<div class='chatbubble user'><strong>You:</strong>" + msg + "<br /></div>")
+        $('#chatlog').append("<div class='chatbubble user'><strong class='name'>You:</strong> " + msg + "<br /></div>")
 
     //var id = data.id;
     console.log(msg); 
@@ -22,7 +22,7 @@ function submitSMS() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         'msg': msg,
-        'phone': '2223334444',
+        'phone': phone,
         state: state
       })
     }).then(res => {
@@ -30,7 +30,8 @@ function submitSMS() {
     })
     .then(data => {
       console.log(data)
-      $('#chatlog').append("<div class='chatbubble bot'><strong>From BOT:</strong>" + data.message + "<br /></div>")
+      if(data.message != '')
+        $('#chatlog').append("<div class='chatbubble bot'><strong class='name'>Iris:</strong> " + data.message + "<br /></div>")
       //$('#chatlog').append("<strong>Current State </strong>" + data.state + "<br />")
       $('#inputSMS').val('');
       $('#inputState').val(data.state)

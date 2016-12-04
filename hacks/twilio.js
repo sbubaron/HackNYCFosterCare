@@ -70,24 +70,34 @@ app.post('/chat', function (req, res) {
   }
   var profile = null
 
-  if(iMsg === 'help') {
+  if(iMsg === 'help' || iMsg === 'hey iris') {
     state = 'help'
   }
 
-  request(options, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      profile = JSON.parse(body)
-      profile = profile.profile[0]
-      var id = profile._id
-      console.log(id)
+  fetch('http://localhost:3000/profiles/by-phone/' + iPhone + '/json', {
+    method: 'get',
+    headers: {'Content-Type': 'application/json'}
+  }).then(res => {
+    if (res.ok) return res.json()
+  }).then(data => {  
+    console.log(data)
 
+      if(data != undefined && data.profile != undefined && Array.isArray(data.profile))
+        return data.profile[0]
+      else
+      {
+        console.log('null')
+        return null
+      }
+        
+  }).then(profile => {
       var response = ''
 
       switch (state) {
 
         case 'help':
           if (profile) {
-            response = 'Welcome back ' + profile.name
+            response = 'Hey ' + profile.name + '! '
             //check if has Active tasks
             if (profile.activeTaskID) {
               state = 'continuing'
@@ -106,7 +116,7 @@ app.post('/chat', function (req, res) {
               })
               .then(data => {
                 console.log(data)
-                response += 'I can help you...'
+                response += 'I can help you: '
                 data = data.tasks
                 for(var i =0; i<data.length; i++) {
                   console.log(data[i])
@@ -125,10 +135,27 @@ app.post('/chat', function (req, res) {
           }
           else {
             state = 'new_promptName'
-            response = 'It looks like you need to setup a profile what is your name?'
+            response = 'Hey there, it looks like your new around here, lets set up your profile! What is your name?'
             res.send({message: response, state: state})
           }
         break;
+
+        case 'new_promptName': {
+          fetch('http://localhost:3000/profiles/', {
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                      'cellphone': iPhone,
+                      'name': iMsg
+                    })
+                  }).then(res => {
+                    if (res.ok) return res.json()
+                  }).then(data => {
+                    response = "Hi " + iMsg
+                    state = 'help'
+                    res.send({message: response, state: state, repost: true})
+                  })
+        }
 
         case 'clearTask':
 
@@ -142,7 +169,7 @@ app.post('/chat', function (req, res) {
                   }).then(res => {
                     if (res.ok) return res.json()
                   }).then(data => {
-                    response = "Task Cleared"
+                    response = ""
                     state = 'help'
                     res.send({message: response, state: state, repost: true})
                   })
@@ -282,10 +309,7 @@ app.post('/chat', function (req, res) {
             res.send({message: response, state: state})
         break;
       }
-    }
-
-    
-  })
+    })   
 })
 
 

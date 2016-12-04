@@ -180,7 +180,7 @@ app.get('/profiles/by-id/:id/json', (req, res) => {
 app.get('/taskitem/by-id/:id/json', (req, res) => {
   console.log(req.params.id)
 
-  db.collection('taskItems').find({_id: ObjectID(req.params.id)}).toArray((err, result) => {
+  db.collection('taskItems').find({_id: ObjectID(req.params.id)}.sort({index: -1})).toArray((err, result) => {
     if (err) return console.log(err)
     res.setHeader('Content-Type', 'application/json')
     res.send(JSON.stringify({taskItem: result}, null, 3))
@@ -332,7 +332,7 @@ app.get('/tasks/by-id/:id', (req, res) => {
     if (err) return console.log(err)
     //console.log(taskRes)
 
-    db.collection('taskItems').find({parentTaskId: req.params.id}).toArray((err, taskItemsRes) => {
+    db.collection('taskItems').find({parentTaskId: req.params.id}).sort({index: 1}).toArray((err, taskItemsRes) => {
       if (err) return console.log(err)
       // console.log(taskItemsRes)
 

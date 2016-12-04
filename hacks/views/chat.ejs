@@ -1,18 +1,25 @@
 <%- include('header'); %>
 
     <div class="container">
-      <div class="row">
+      <div class="row fluffy">
         <div class="col-sm-12 col-md-12 col-lg-12">
-        Chat:
+
+        <div class="row">
+        <div class="col-sm-12">
+        
 
         <div id="chatlog"></div>
-
+        </div>
+        </div>
+        
         <input type="text" name="inputSMS" id="inputSMS" />
 
         <input type="submit" name="sendSMS" id="sendSMS" />
 
-
-        <input type="text" name="inputState" id="inputState" />
+        <div class="form-group"><label for="inputState">Current System State (Debugging)</label>        
+            <input type="text" name="inputState" id="inputState" />
+        </div>
+        <div class="form-group"><label for="inputPhone">User Phone Number</label>
         <input type="text" name="inputPhone" id="inputPhone" value="2223334444" />
         </div>
     </div>
