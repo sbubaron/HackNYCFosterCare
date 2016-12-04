@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Profile</title>
-</head>
-<body>
-  <h2>Profile ID: <%= id %></h2>
+<%- include('header'); %>
+
+<div class="content">
+
+<div class="row">
+<div class="container">
+<%if (profile.length > 0) { %>
+
+  <h2>Profile ID: <%= profile[0]._id %></h2>
 
    <ul>
    <li><span><%= profile[0].name %></span></li>
@@ -15,5 +16,25 @@
       <li><span><%= profile[0].cellphone %></span></li>
 </ul>
 
-</body>
-</html>
+<input type="text" placeholder="name" name="name" id="name" value="<%= profile[0].name %>">
+            <input type="date" placeholder="dob" name="dob"  id="dob" value="<%= profile[0].dob %>">
+            <input type="text" placeholder="Cell Phone" name="cellphone" id="cellphone" value="<%= profile[0].cellphone %>">
+            <input type="text" placeholder="interests" name="interests" id="interests" list="interests" value="<%= profile[0].interests %>">
+            <datalist id="interests">
+              <option value="Housing">
+              <option value="Education">
+              <option value="Life Skills">
+              <option value="Employment">
+            </datalist>
+            <button id="updateProfile" data-button='{"id": "<%= profile[0]._id %>"}'>Submit</button>
+// Do something with more than 1 recipe
+<% } %>
+<% if (profile.length < 1) { %>
+No results found
+<% } %>
+</div>
+</div>
+</div>
+
+
+<%- include('footer'); %>

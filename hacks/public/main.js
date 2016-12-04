@@ -1,35 +1,51 @@
-var update = document.getElementById('update')
+$('.deleteProfile').click(function () {
 
-update.addEventListener('click', function () {
-  fetch('quotes', {
+    console.log(this);
+    var data = $.parseJSON($(this).attr('data-button'));
+    
+    var id = data.id;
+    console.log(id); 
+    fetch('/profiles/delete/by-id', {
+      method: 'delete',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        'id': id
+      })
+    }).then(res => {
+      if (res.ok) return res.json()
+    })
+    .then(data => {
+      console.log(data)
+      //window.location.reload(true)
+    })
+});
+
+
+$('#updateProfile').click(function () {
+    console.log(this);
+    var data = $.parseJSON($(this).attr('data-button'));
+    var name = $('#name').val();
+    var cellphone = $('#cellphone').val();
+    var interests = $('#interests').val();
+    var dob = $('#dob').val();
+    
+    var id = data.id;
+     
+
+    fetch('/profiles/update/by-id', {
     method: 'put',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
-      'name': 'ACKBAR',
-      'quote': 'ITS A TRAAAAAP.'
+      'id': id,
+      'name': name,
+      'dob': dob,
+      'cellphone': cellphone,
+      'interests': interests
     })
   }).then(res => {
     if (res.ok) return res.json()
   }).then(data => {
-    console.log(data)
     window.location.reload(true)
   })
-})
 
-var del = document.getElementById('delete')
-
-del.addEventListener('click', function () {
-  fetch('quotes', {
-    method: 'delete',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      'name': 'ACKBAR'
-    })
-  }).then(res => {
-    if (res.ok) return res.json()
-  })
-  .then(data => {
-    console.log(data)
-    window.location.reload(true)
-  })
-})
+});

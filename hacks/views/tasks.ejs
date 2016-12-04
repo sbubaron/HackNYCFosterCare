@@ -1,0 +1,43 @@
+<%- include('header'); %>
+
+ <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+
+
+          <h2>Tasks</h2>
+          <ul class="tasks">
+            <% for(var i=0; i<tasks.length; i++) {%>
+              <li class="profiles">
+                <span><a href="tasks/by-id/<%= tasks[i]._id %>">View Task</a></span>
+                <span><%= tasks[i].name %></span>
+                <span><%= tasks[i].description %></span>
+                <span><%= tasks[i].interest %></span>
+                <span><%= tasks[i].parentTaskId %></span>
+                <span><a href="<%= tasks[i].url %>">More Info</a></span>
+              </li>
+              <% } %>
+          </ul>
+
+          <h4>Add Profile</h4>
+          <form action="/tasks" method="POST">
+            <input type="text" placeholder="name" name="name">
+            <input type="text" placeholder="description" name="description">
+            <input type="date" placeholder="deadline" name="deadline">
+            <input type="text" placeholder="interests" name="interests" list="interests">
+            <datalist id="interests">
+              <option value="Housing">
+              <option value="Education">
+              <option value="Life Skills">
+              <option value="Employment">
+            </datalist>
+            <input type="text" placeholder="More Info URL" name="url">
+            <input type="text" placeholder="Parent Task ID" name="parentTaskId">
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+
+  <%- include('footer'); %>

@@ -196,7 +196,7 @@ gulp.task('browser-sync', function () {
    //     next()
    //   }
    // },
-    proxy: 'starquotes.box:3000',
+    proxy: 'hacks.box:3000',
     host: 'localhost',
     port: 4000,
     ghostMode: true,
